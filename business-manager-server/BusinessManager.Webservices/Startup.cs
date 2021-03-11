@@ -11,7 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-
+using Microsoft.EntityFrameworkCore;
+using BusinessManager.Core;
 namespace BusinessManager.Webservices
 {
     public class Startup
@@ -26,7 +27,11 @@ namespace BusinessManager.Webservices
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<BusinessContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("Default"),
+                action => action.MigrationsAssembly("BusinessManager")
 
+            ));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
