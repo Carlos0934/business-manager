@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using BusinessManager.Core;
+using BusinessManager.Warehouse;
 namespace BusinessManager.Webservices
 {
     public class Startup
@@ -29,9 +30,10 @@ namespace BusinessManager.Webservices
         {
             services.AddDbContext<BusinessContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("Default"),
-                action => action.MigrationsAssembly("BusinessManager")
+                action => action.MigrationsAssembly("BusinessManager.Webservices")
 
             ));
+            services.AddScoped<ICRUDRepository<Client>, ClientRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

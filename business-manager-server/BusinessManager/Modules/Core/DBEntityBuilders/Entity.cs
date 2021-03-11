@@ -11,7 +11,6 @@ namespace BusinessManager.Core
 
             builder.Entity<T>()
             .Property(entity => entity.Id)
-            .HasDefaultValue(0)
             .IsRequired()
             .ValueGeneratedOnAdd();
             
